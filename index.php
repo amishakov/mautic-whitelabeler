@@ -1,4 +1,6 @@
 <?php
+// Turn off warnings and notices
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 require_once('whitelabeler.php');
 $whitelabeler = new Whitelabeler;
 
