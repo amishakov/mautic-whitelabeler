@@ -117,6 +117,59 @@ sudo -u www-data php cli.php --restore
 
 If you have any backups in the backups directory, you will be prompted to select a backup to restore from. I recommend doing a manual backup before trying this for the first time your system, just to be safe.
 
+## Docker Version
+
+Extra steps are required when using Mautic with Docker. Go into the container:
+
+```
+sudo docker exec -it basic-mautic_web-1 bash
+```
+
+#### 1. Temporarily rename the `.htaccess` file:
+
+```
+mv /var/www/html/docroot/.htaccess /var/www/html/docroot/htaccess
+```
+
+#### Install Git and clone the repo
+
+```
+apt update
+apt install git
+cd /var/www/html/docroot
+git clone https://github.com/nickian/mautic-whitelabeler.git
+```
+
+#### Do Your Whitelabeling
+
+Make sure your permissons are correct (`chown -R www-data:www-data /var/www/html/docroot`)
+
+After running the whitelabeler, change your `htaccess` file back to `.htaccess`
+
+```
+mv /var/www/html/docroot/htaccess /var/www/html/docroot/.htaccess
+```
+
+#### Install Composer
+
+Follow the directions here: https://getcomposer.org/download
+
+#### Install Node/NPM
+
+```
+apt-get install curl software-properties-common
+curl -sL https://deb.nodesource.com/setup_20.x | bash - 
+apt-get install nodejs
+```
+
+#### Run Composer
+
+```
+cd /var/www/html
+composer install
+```
+
+When you visit your Mautic site, it should be updated.
 
 ## Common Issues / Support  :sos:
 
